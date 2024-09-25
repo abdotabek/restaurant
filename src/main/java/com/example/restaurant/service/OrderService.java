@@ -32,9 +32,13 @@ public class OrderService {
         this.storeRepository = storeRepository;
     }
 
-    public List<Orders> getAllOrders() {
-        return orderRepository.findAll();
-
+    public List<OrderDto> getAllOrders() {
+        List<Orders> orders = orderRepository.findAll();
+        List<OrderDto> orderDtos = new ArrayList<>();
+        for (Orders o : orders) {
+            orderDtos.add(OrderDto.fromEntity(o));
+        }
+        return orderDtos;
     }
 
     @Transactional

@@ -1,0 +1,12 @@
+POST localhost:8080/orders/create
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "storeId": 1,
+  "orderItems": [{
+    "productId": 1,
+    "quantity": 2
+  }],
+  "status": "COMPLETED"
+}

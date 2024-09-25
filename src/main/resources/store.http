@@ -1,0 +1,22 @@
+POST localhost:8080/store/create
+Content-Type: application/json
+
+{
+  "name": "korzinka",
+  "address": "yashnobod",
+  "phone": "998937877405"
+}
+###
+GET localhost:8080/store/getAll
+
+###
+DELETE localhost:8080/store/delete/1
+###
+PUT localhost:8080/store/update/2
+Content-Type: application/json
+
+{
+  "name": "makro",
+  "address": "yunisobod",
+  "phone": "998971548565"
+}
