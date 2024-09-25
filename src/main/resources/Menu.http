@@ -1,0 +1,9 @@
+POST localhost:8080/menu/create
+Content-Type: application/json
+
+{
+  "name": "osh",
+  "category": "milliy",
+  "price": 15000,
+  "description": "choyxona osh"
+}

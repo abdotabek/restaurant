@@ -1,0 +1,24 @@
+POST localhost:8080/api/create
+Content-Type: application/json
+
+{
+  "name": "otabek",
+  "address": "toshkent",
+  "phone": "998937877405"
+}
+###
+PUT localhost:8080/api/update/1
+Content-Type: application/json
+
+{
+  "name": "potabek",
+  "address": "baynalminal",
+  "phone": "998914827778"
+}
+
+
+###
+GET localhost:8080/api/gelAll
+
+###
+DELETE localhost:8080/api/2
