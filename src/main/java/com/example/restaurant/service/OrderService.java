@@ -37,6 +37,7 @@ public class OrderService {
 
     }
 
+    @Transactional
     public OrderDto createOrder(OrderDto orderDto) {
         Customer customer = customerRepository.findById(orderDto.getCustomerId()).orElseThrow(null);
 
@@ -56,4 +57,50 @@ public class OrderService {
         orders = orderRepository.save(orders);
         return OrderDto.fromEntity(orders);
     }
+
+    @Transactional
+    public OrderDto updateOrder(Long id, OrderDto orderDto) {
+        Orders orders = orderRepository.findById(id).orElseThrow(null);
+
+        Customer customer = customerRepository.findById(orderDto.getCustomerId()).orElseThrow(null);
+
+        Store store = storeRepository.findById(orderDto.getStoreId()).orElseThrow(null);
+
+        List<OrderItem> newOrderItems = new ArrayList<>();
+        for (OrderItemDto orderItemDto : orderDto.getOrderItems()) {
+            Menu menu = menuRepository.findById(orderItemDto.getMenuId()).orElse(null);
+            OrderItem orderItem = orderItemDto.toEntity(orders, menu);
+            newOrderItems.add(orderItem);
+        }
+        orderItemRepository.deleteAll(orders.getOrderItems());
+        orderItemRepository.saveAll(newOrderItems);
+        orders.setCustomer(customer);
+        orders.setStore(store);
+        orders.setOrderItems(newOrderItems);
+        orders.setStatus(orderDto.getStatus());
+        orders.setOrderUpdateAt(LocalDateTime.now());
+        orderRepository.save(orders);
+        return OrderDto.fromEntity(orders);
+    }
+
+    @Transactional
+    public void cancelOrder(Long id) {
+        Orders orders = orderRepository.findById(id).orElseThrow(null);
+        orders.setStatus(OrderStatus.CANCELED);
+        orderRepository.save(orders);
+    }
+
+    public double calculateTotalAmount(Long id) {
+        Orders orders = orderRepository.findById(id).orElseThrow(null);
+        return orders.getOrderItems().stream()
+                .mapToDouble(orderItem -> orderItem.getMenu().getPrice() * orderItem.getQuantity()).sum();
+    }
+
+    public double completeOrder(Long id) {
+        Orders orders = orderRepository.findById(id).orElseThrow(null);
+        orders.setStatus(OrderStatus.CANCELED);
+        orderRepository.save(orders);
+        return calculateTotalAmount(id);
+    }
+
 }
