@@ -7,3 +7,19 @@ Content-Type: application/json
   "price": 15000,
   "description": "choyxona osh"
 }
+
+### get all menu
+GET localhost:8080/menu/getAll
+
+### update by id
+PUT localhost:8080/menu/update/1
+Content-Type: application/json
+
+{
+  "name": "shorva",
+  "category": "domashni",
+  "price": 18000,
+  "description": "go'shli"
+}
+### delete by id
+DELETE localhost:8080/menu/delete/1
