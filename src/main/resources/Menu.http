@@ -2,10 +2,10 @@ POST localhost:8080/menu/create
 Content-Type: application/json
 
 {
-  "name": "osh",
+  "name": "shorva",
   "category": "milliy",
-  "price": 15000,
-  "description": "choyxona osh"
+  "price": 25000,
+  "description": "domashni"
 }
 
 ### get all menu
